@@ -3,7 +3,7 @@ name: Restrict Commits to Folder
 on:
   push:
     paths:
-      - "restricted-folder/**"
+      - "core/**"
 
 jobs:
   restrict-commits:
