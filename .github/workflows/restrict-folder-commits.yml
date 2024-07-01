@@ -12,8 +12,9 @@ jobs:
     steps:
     - name: Check commit author
       run: |
+        echo "I am here"
         COMMIT_AUTHOR=$(git log -1 --pretty=format:'%ae')
-        RESTRICTED_USER="shudhanshu.raj@amoga.io"
+        RESTRICTED_USER="restricted_user@example.com"
 
         if [ "$COMMIT_AUTHOR" = "$RESTRICTED_USER" ]; then
           echo "User $COMMIT_AUTHOR is not allowed to commit to this folder."
