@@ -1,10 +1,10 @@
-name: Restrict folder commits
+ name: Restrict folder commits
 
 on:
   push:
     branches:
       - main
-      - 'module-*'
+      - 'module-*' 
 
 jobs:
   restrict-folder-commits:
@@ -13,10 +13,13 @@ jobs:
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 2  # Ensure we fetch the last two commits
 
     - name: Restrict commits to specific folder
       run: |
-        if git diff --name-only HEAD^ HEAD | grep -q '^core/'; then
-          echo "You are not allowed to commit to the 'core/' directory."
+        if git diff --name-only HEAD~1 HEAD | grep -q '^restricted-folder/'; then
+          echo "You are not allowed to commit to the 'restricted-folder/' directory."
           exit 1
         fi
+      shell: /usr/bin/bash -e {0}
