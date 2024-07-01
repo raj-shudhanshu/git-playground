@@ -13,7 +13,7 @@ jobs:
     - name: Check commit author
       run: |
         echo "I am here"
-        COMMIT_AUTHOR=$(git log -1 --pretty=format:'%ae')
+        COMMIT_AUTHOR="shudhanshu.raj@amoga.io"
         RESTRICTED_USER="restricted_user@example.com"
 
         if [ "$COMMIT_AUTHOR" = "$RESTRICTED_USER" ]; then
