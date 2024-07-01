@@ -1,25 +1,21 @@
- name: Restrict folder commits
+name: Restrict Commits to Folder
 
 on:
   push:
-    branches:
-      - main
-      - 'module-*' 
+    paths:
+      - "restricted-folder/**"
 
 jobs:
-  restrict-folder-commits:
+  restrict-commits:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out repository
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 2  # Ensure we fetch the last two commits
-
-    - name: Restrict commits to specific folder
+    - name: Check commit author
       run: |
-        if git diff --name-only HEAD~1 HEAD | grep -q '^restricted-folder/'; then
-          echo "You are not allowed to commit to the 'restricted-folder/' directory."
+        COMMIT_AUTHOR=$(git log -1 --pretty=format:'%ae')
+        RESTRICTED_USER="shudhanshu.raj@amoga.io"
+
+        if [ "$COMMIT_AUTHOR" = "$RESTRICTED_USER" ]; then
+          echo "User $COMMIT_AUTHOR is not allowed to commit to this folder."
           exit 1
         fi
-      shell: /usr/bin/bash -e {0}
